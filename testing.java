@@ -1,14 +1,20 @@
 public class testing
 {
-  public int myPublicInt;
-  private int myPrivateInt;
-  protected int myProtectedInt;
+  public static void main(String[] args) {
+    int count = 0;
+    float floatcount = 0.0f;
 
-    public static void main(String[] args) {
-      Myfirstclass myfirstclassobject = new Myfirstclass();
-      myfirstclassobject.myPublicInt = 1;
-      System.out.println(myfirstclassobject.myPublicInt);
+    float total = 0f;
+    for(int i = 0; i < 10; i++)
+    {
+      count++;
+      floatcount += 0.1f;
     }
+
+    System.out.print("Count " + count+ "\n");
+    System.out.print("Float Count " + floatcount + "\n");
+
+  }
 
 
 }
