@@ -16,16 +16,16 @@ public class IT
     myStringList.add("Ant");
 
     //print OG list
-    System.out.println(myStringList);
+    System.out.println("OG list: " + myStringList);
     //sort
     Collections.sort(myStringList);
-    System.out.println(myStringList);
+    System.out.println("Sort: " + myStringList);
     //reverse sort
     Collections.reverse(myStringList);
-    System.out.println(myStringList);
+    System.out.println("Reverse: " + myStringList);
     //shuffle
     Collections.shuffle(myStringList);
-    System.out.println(myStringList);
+    System.out.println("Shuffle: " + myStringList);
 
 
     List<Integer> myIntList = new ArrayList<Integer>(10);
