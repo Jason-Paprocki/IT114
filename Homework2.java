@@ -1,7 +1,8 @@
 import java.util.*;
 public class Homework2
 {
-  public static void main(String[] args) {
+  public static void main(String[] args)
+  {
     //create queue
      Queue<String> StringQueue = new LinkedList<>();
 
@@ -46,6 +47,12 @@ public class Homework2
   //overrriding the tostring
   public String toString()
   {
-    return 
+    String s = "";
+    for (String item : StringQueue)
+    {
+      s += item;
+      s += " ";
+    }
+    return s;
   }
 }
