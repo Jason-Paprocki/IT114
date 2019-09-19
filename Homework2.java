@@ -1,10 +1,14 @@
 import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class Homework2
 {
+  Queue<String> StringQueue = new LinkedList<>();
   public static void main(String[] args)
   {
     //create queue
-     Queue<String> StringQueue = new LinkedList<>();
+
 
      StringQueue.add("Element 1");
      StringQueue.add("Element 2");
@@ -41,12 +45,18 @@ public class Homework2
           System.out.println("StringQueue doesn't contain " + element);
       }
 
+      System.out.println(StringQueue.toString());
+
   }
 
 
   //overrriding the tostring
   public String toString()
   {
+    //return "LinkedQueue " + super.toString();
+    //return this.peek();
+
+
     String s = "";
     for (String item : StringQueue)
     {
@@ -54,5 +64,6 @@ public class Homework2
       s += " ";
     }
     return s;
+    
   }
 }
