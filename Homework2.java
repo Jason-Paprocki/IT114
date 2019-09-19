@@ -4,15 +4,17 @@ import java.util.NoSuchElementException;
 
 public class Homework2
 {
-  Queue<String> StringQueue = new LinkedList<>();
+
   public static void main(String[] args)
   {
     //create queue
-
+    Queue<String> StringQueue = new LinkedList<>();
 
      StringQueue.add("Element 1");
      StringQueue.add("Element 2");
      StringQueue.add("Element 3");
+     StringQueue.add("Element 4");
+     StringQueue.add("Element 5");
 
      //peek at element 1
      System.out.println(StringQueue.peek());
@@ -53,10 +55,11 @@ public class Homework2
   //overrriding the tostring
   public String toString()
   {
-    //return "LinkedQueue " + super.toString();
-    //return this.peek();
+    //so somehow this works from stack overflow
+    return super.toString();
 
-
+    //but this is my atempt that I made that doesnt work
+    /*
     String s = "";
     for (String item : StringQueue)
     {
@@ -64,6 +67,7 @@ public class Homework2
       s += " ";
     }
     return s;
-    
+    */
+
   }
 }
