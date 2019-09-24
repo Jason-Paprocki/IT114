@@ -54,7 +54,19 @@ public class SampleSocketServer2 {
 	public static void main(String[] arg) {
 		System.out.println("Starting Server");
 		SampleSocketServer2 server = new SampleSocketServer2();
-		server.start(3002);
+    int port = -1;
+    if(arg.length > 0)
+    {
+      try
+      {
+        port = Integer.parseInt(arg[0]);
+      }
+      catch(Exception e)
+      {
+        System.out.println("Invalid Port " + arg[0]);
+      }
+    }
+		server.start(port);
 		System.out.println("Server Stopped");
 	}
 }
