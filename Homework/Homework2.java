@@ -15,7 +15,7 @@ public class Homework2
      StringQueue.add("Element 3");
      StringQueue.add("Element 4");
      StringQueue.add("Element 5");
-     
+
 
      //peek at element 1
      System.out.println(StringQueue.peek());
