@@ -61,6 +61,41 @@ public class Server
         client.close();
         continue;
       }
+
+      // get data from the server
+      final InputStream from_server = outserver.getInputStream();
+      //gets data from client to the server
+      final OutputStream to_server = outserver.getOutputStream();
+      Thread thread = new Thread()
+      {
+        @Override
+        public void run()
+        {
+          int bytes_read;
+          try
+          {
+            while((bytes_read = from_client.read(request)) != -1)
+            {
+                to_server.write(request, 0, bytes_read);
+                to_server.flush();
+            }
+          }
+          catch(IOException e)
+          {
+            try
+            {
+              to_server.close();
+            }
+            catch(IOException p)
+            {
+              ;
+            }
+          }
+        }
+      };
+
+
+
     }
 
 
