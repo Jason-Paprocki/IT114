@@ -2,10 +2,10 @@ import java.util.*;
 import java.net.*;
 import java.io.*;
 
-public class Proxy
+public class Proxy implements Runnable
 {
 
-  private ServerSocket ServerSocket;
+  private ServerSocket serverSocket;
   private volatile boolean running = true;
   static ArrayList<Thread> servicingThreads;
 
@@ -65,7 +65,10 @@ public class Proxy
         io.printStackTrace();
       }
     }
+  }
 
+  public void run()
+  {
 
   }
 }
