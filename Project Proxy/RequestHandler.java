@@ -353,7 +353,8 @@ public class RequestHandler implements Runnable {
 			}
 		}
 
-		catch (Exception e){
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
