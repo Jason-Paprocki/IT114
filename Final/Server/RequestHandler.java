@@ -42,7 +42,7 @@ public class RequestHandler implements Runnable {
 
 
 	/**
-	 * Creates a ReuqestHandler object capable of servicing HTTP(S) GET requests
+	 * Creates a RequestHandler object capable of servicing HTTP(S) GET requests
 	 * @param clientSocket socket connected to the client
 	 */
 	public RequestHandler(Socket clientSocket){
@@ -55,7 +55,7 @@ public class RequestHandler implements Runnable {
 		}
 		catch (IOException e)
 		{
-			System.out.println("Eror");
+			System.out.println("Error on IO Exception");
 			e.printStackTrace();
 		}
 	}
@@ -80,8 +80,7 @@ public class RequestHandler implements Runnable {
 		}
 
 		// Parse out URL
-
-		System.out.println("Reuest Received " + requestString);
+		System.out.println("Request Received " + requestString);
 		// Get the Request type
 		String request = requestString.substring(0,requestString.indexOf(' '));
 
@@ -111,8 +110,6 @@ public class RequestHandler implements Runnable {
 
 		}
 	}
-
-
 	 /**
 	 * Sends the contents of the file specified by the urlString to the client
 	 * @param urlString URL ofthe file requested
