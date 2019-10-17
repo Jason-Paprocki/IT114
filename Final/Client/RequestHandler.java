@@ -47,12 +47,15 @@ public class RequestHandler implements Runnable {
 	 */
 	public RequestHandler(Socket clientSocket){
 		this.clientSocket = clientSocket;
-		try{
+		try
+		{
 			this.clientSocket.setSoTimeout(2000);
 			proxyToClientBr = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			proxyToClientBw = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 		}
-		catch (IOException e) {
+		catch (IOException e)
+		{
+			System.out.println("Eror");
 			e.printStackTrace();
 		}
 	}
@@ -433,11 +436,4 @@ public class RequestHandler implements Runnable {
 			}
 		}
 	}
-
-
-	/**
-	 * This method is called when user requests a page that is blocked by the proxy.
-	 * Sends an access forbidden message back to the client
-	 */
-
 }
