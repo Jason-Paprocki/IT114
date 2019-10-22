@@ -45,7 +45,8 @@ public class RequestHandler implements Runnable {
 	 * Creates a ReuqestHandler object capable of servicing HTTP(S) GET requests
 	 * @param clientSocket socket connected to the client
 	 */
-	public RequestHandler(Socket clientSocket){
+	public RequestHandler(Socket clientSocket)
+	{
 		this.clientSocket = clientSocket;
 		try
 		{
