@@ -56,7 +56,7 @@ public class RequestHandler implements Runnable {
 		}
 		catch (IOException e)
 		{
-			System.out.println("Eror");
+			System.out.println("IO Exception Error");
 			e.printStackTrace();
 		}
 	}
