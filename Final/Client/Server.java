@@ -2,7 +2,7 @@ import java.util.*;
 import java.net.*;
 import java.io.*;
 
-public class Proxy implements Runnable
+public class Server implements Runnable
 {
 
   private ServerSocket serverSocket;
@@ -11,11 +11,11 @@ public class Proxy implements Runnable
 
   public static void main(String[] args)
   {
-    Proxy myProxy = new Proxy(8080);
-    myProxy.listen();
+    Server myServer = new Server(8080);
+    myServer.listen();
   }
 
-  public Proxy(int port)
+  public Server(int port)
   {
     servicingThreads = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class Proxy implements Runnable
     {
       serverSocket = new ServerSocket(port);
 
-      System.out.println("Wating for client on port " + serverSocket.getLocalPort());
+      System.out.println("Wating for client to connect on port " + serverSocket.getLocalPort());
       running = true;
     }
     catch (SocketException se)
@@ -67,6 +67,7 @@ public class Proxy implements Runnable
     }
   }
 
+@Override
   public void run()
   {
 
