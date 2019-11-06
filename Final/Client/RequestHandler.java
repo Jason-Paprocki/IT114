@@ -1,23 +1,10 @@
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import javax.imageio.ImageIO;
+import java.util.*;
+import java.net.*;
+import java.io.*;
+import java.net.ServerSocket;
 
-public class RequestHandler implements Runnable {
-
+public class RequestHandler implements Runnable
+{
 	/**
 	 * Socket connected to client passed by Proxy server
 	 */
@@ -34,7 +21,19 @@ public class RequestHandler implements Runnable {
 	BufferedWriter proxyToClientBw;
 
 
-	public RequestHandler(Socket clientSocket){
+	/**
+	 * Thread that is used to transmit data read from client to server when using HTTPS
+	 * Reference to this is required so it can be closed once completed.
+	 */
+	private Thread httpsClientToServer;
+
+
+	/**
+	 * Creates a RequestHandler object capable of servicing HTTP(S) GET requests
+	 * @param clientSocket socket connected to the client
+	 */
+	public RequestHandler(Socket clientSocket)
+	{
 		this.clientSocket = clientSocket;
 		try
 		{
@@ -49,22 +48,50 @@ public class RequestHandler implements Runnable {
 		}
 	}
 
+	/**
+	 * Reads and examines the requestString and calls the appropriate method based
+	 * on the request type.
+	 */
 	@Override
-	public void run() {
-
+	public void run() 
+	{
 		// Get Request from client
 		String requestString;
-		try{
+		try
+		{
 			requestString = proxyToClientBr.readLine();
-		} catch (IOException e) {
+			System.out.println(requestString);
+			sendToClient(requestString);
+			System.out.println("Beep");
+		}
+		catch (IOException e) 
+		{
 			e.printStackTrace();
 			System.out.println("Error reading request from client");
 			return;
 		}
-
-		// Parse out URL
-		System.out.println("Request Received " + requestString);
-		// Get the Request type
+	}
+	
+	public void sendToClient(String url) throws IOException
+	{
+		clientSocket = new Socket("192.168.0.226", 8080);
+		proxyToClientBw.write(url);
+		proxyToClientBw.flush();
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
