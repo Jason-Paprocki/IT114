@@ -1,3 +1,11 @@
+/*
+
+-----------------------------------------------------------------------------------------------
+STOLEN FROM THIS MAN ON GITHUB
+https://github.com/stefano-lupo/Java-Proxy-Server/blob/master/src/RequestHandler.java
+
+-----------------------------------------------------------------------------------------------
+*/
 import java.util.*;
 import java.net.*;
 import java.io.*;
