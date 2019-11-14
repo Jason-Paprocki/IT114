@@ -69,9 +69,12 @@ public class RequestHandler implements Runnable
 
 		// Get Request from client
 		String requestString;
-		try{
+		try
+        {
 			requestString = proxyToClientBr.readLine();
-		} catch (IOException e) {
+		}
+        catch (IOException e)
+        {
 			e.printStackTrace();
 			System.out.println("Error reading request from client");
 			return;
@@ -95,103 +98,19 @@ public class RequestHandler implements Runnable
 			urlString = temp + urlString;
 		}
 
-
-		// Check if site is blocked
-		if(Proxy.isBlocked(urlString)){
-			System.out.println("Blocked site requested : " + urlString);
-			blockedSiteRequested();
-			return;
-		}
-
-
 		// Check request type
 		if(request.equals("CONNECT")){
 			System.out.println("HTTPS Request for : " + urlString + "\n");
 			handleHTTPSRequest(urlString);
 		}
 
-		else{
-			// Check if we have a cached copy
-			File file;
-			if((file = Proxy.getCachedPage(urlString)) != null){
-				System.out.println("Cached Copy found for : " + urlString + "\n");
-				sendCachedPageToClient(file);
-			} else {
-				System.out.println("HTTP GET for : " + urlString + "\n");
-				sendNonCachedToClient(urlString);
-			}
+		else
+        {
+			System.out.println("HTTP GET for : " + urlString + "\n");
+			sendNonCachedToClient(urlString);
+
 		}
 	}
-
-
-	/**
-	 * Sends the specified cached file to the client
-	 * @param cachedFile The file to be sent (can be image/text)
-	 */
-	private void sendCachedPageToClient(File cachedFile){
-		// Read from File containing cached web page
-		try{
-			// If file is an image write data to client using buffered image.
-			String fileExtension = cachedFile.getName().substring(cachedFile.getName().lastIndexOf('.'));
-
-			// Response that will be sent to the server
-			String response;
-			if((fileExtension.contains(".png")) || fileExtension.contains(".jpg") ||
-					fileExtension.contains(".jpeg") || fileExtension.contains(".gif")){
-				// Read in image from storage
-				BufferedImage image = ImageIO.read(cachedFile);
-
-				if(image == null ){
-					System.out.println("Image " + cachedFile.getName() + " was null");
-					response = "HTTP/1.0 404 NOT FOUND \n" +
-							"Proxy-agent: ProxyServer/1.0\n" +
-							"\r\n";
-					proxyToClientBw.write(response);
-					proxyToClientBw.flush();
-				} else {
-					response = "HTTP/1.0 200 OK\n" +
-							"Proxy-agent: ProxyServer/1.0\n" +
-							"\r\n";
-					proxyToClientBw.write(response);
-					proxyToClientBw.flush();
-					ImageIO.write(image, fileExtension.substring(1), clientSocket.getOutputStream());
-				}
-			}
-
-			// Standard text based file requested
-			else {
-				BufferedReader cachedFileBufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(cachedFile)));
-
-				response = "HTTP/1.0 200 OK\n" +
-						"Proxy-agent: ProxyServer/1.0\n" +
-						"\r\n";
-				proxyToClientBw.write(response);
-				proxyToClientBw.flush();
-
-				String line;
-				while((line = cachedFileBufferedReader.readLine()) != null){
-					proxyToClientBw.write(line);
-				}
-				proxyToClientBw.flush();
-
-				// Close resources
-				if(cachedFileBufferedReader != null){
-					cachedFileBufferedReader.close();
-				}
-			}
-
-
-			// Close Down Resources
-			if(proxyToClientBw != null){
-				proxyToClientBw.close();
-			}
-
-		} catch (IOException e) {
-			System.out.println("Error Sending Cached file to client");
-			e.printStackTrace();
-		}
-	}
-
 
 	/**
 	 * Sends the contents of the file specified by the urlString to the client
@@ -199,7 +118,8 @@ public class RequestHandler implements Runnable
 	 */
 	private void sendNonCachedToClient(String urlString){
 
-		try{
+		try
+        {
 
 			// Compute a logical file name as per schema
 			// This allows the files on stored on disk to resemble that of the URL it was taken from
@@ -490,7 +410,8 @@ public class RequestHandler implements Runnable
 		 * @param proxyToClientIS Stream that proxy uses to receive data from client
 		 * @param proxyToServerOS Stream that proxy uses to transmit data to remote server
 		 */
-		public ClientToServerHttpsTransmit(InputStream proxyToClientIS, OutputStream proxyToServerOS) {
+		public ClientToServerHttpsTransmit(InputStream proxyToClientIS, OutputStream proxyToServerOS)
+        {
 			this.proxyToClientIS = proxyToClientIS;
 			this.proxyToServerOS = proxyToServerOS;
 		}
@@ -518,25 +439,6 @@ public class RequestHandler implements Runnable
 				System.out.println("Proxy to client HTTPS read timed out");
 				e.printStackTrace();
 			}
-		}
-	}
-
-
-	/**
-	 * This method is called when user requests a page that is blocked by the proxy.
-	 * Sends an access forbidden message back to the client
-	 */
-	private void blockedSiteRequested(){
-		try {
-			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-			String line = "HTTP/1.0 403 Access Forbidden \n" +
-					"User-Agent: ProxyServer/1.0\n" +
-					"\r\n";
-			bufferedWriter.write(line);
-			bufferedWriter.flush();
-		} catch (IOException e) {
-			System.out.println("Error writing to client when requested a blocked site");
-			e.printStackTrace();
 		}
 	}
 }
