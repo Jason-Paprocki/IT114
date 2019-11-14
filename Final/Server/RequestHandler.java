@@ -74,6 +74,7 @@ public class RequestHandler implements Runnable
 		try
         {
 			requestString = proxyToClientBr.readLine();
+			proxyToClientBr.setSoTimeout(2000);
 		}
         catch (IOException e)
         {
