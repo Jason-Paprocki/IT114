@@ -116,7 +116,8 @@ public class RequestHandler implements Runnable
 	 * Sends the contents of the file specified by the urlString to the client
 	 * @param urlString URL ofthe file requested
 	 */
-	private void sendNonCachedToClient(String urlString){
+	private void sendNonCachedToClient(String urlString)
+    {
 
 		try
         {
@@ -151,44 +152,18 @@ public class RequestHandler implements Runnable
 
 
 
-			// Attempt to create File to cache to
-			boolean caching = true;
-			File fileToCache = null;
-			BufferedWriter fileToCacheBW = null;
-
-			try{
-				// Create File to cache
-				fileToCache = new File("cached/" + fileName);
-
-				if(!fileToCache.exists()){
-					fileToCache.createNewFile();
-				}
-
-				// Create Buffered output stream to write to cached copy of file
-				fileToCacheBW = new BufferedWriter(new FileWriter(fileToCache));
-			}
-			catch (IOException e){
-				System.out.println("Couldn't cache: " + fileName);
-				caching = false;
-				e.printStackTrace();
-			} catch (NullPointerException e) {
-				System.out.println("NPE opening file");
-			}
-
-
-
-
-
 			// Check if file is an image
 			if((fileExtension.contains(".png")) || fileExtension.contains(".jpg") ||
-					fileExtension.contains(".jpeg") || fileExtension.contains(".gif")){
+					fileExtension.contains(".jpeg") || fileExtension.contains(".gif"))
+                    {
+
 				// Create the URL
 				URL remoteURL = new URL(urlString);
 				BufferedImage image = ImageIO.read(remoteURL);
 
 				if(image != null) {
 					// Cache the image to disk
-					ImageIO.write(image, fileExtension.substring(1), fileToCache);
+					//ImageIO.write(image, fileExtension.substring(1), fileToCache);
 
 					// Send response code to client
 					String line = "HTTP/1.0 200 OK\n" +
@@ -241,11 +216,6 @@ public class RequestHandler implements Runnable
 				while((line = proxyToServerBR.readLine()) != null){
 					// Send on data to client
 					proxyToClientBw.write(line);
-
-					// Write to our cached copy of the file
-					if(caching){
-						fileToCacheBW.write(line);
-					}
 				}
 
 				// Ensure all data is sent by this point
@@ -255,18 +225,6 @@ public class RequestHandler implements Runnable
 				if(proxyToServerBR != null){
 					proxyToServerBR.close();
 				}
-			}
-
-
-			if(caching){
-				// Ensure data written and add to our cached hash maps
-				fileToCacheBW.flush();
-				Proxy.addCachedPage(urlString, fileToCache);
-			}
-
-			// Close down resources
-			if(fileToCacheBW != null){
-				fileToCacheBW.close();
 			}
 
 			if(proxyToClientBw != null){
