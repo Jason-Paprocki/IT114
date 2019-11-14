@@ -6,20 +6,6 @@ https://github.com/stefano-lupo/Java-Proxy-Server/blob/master/src/RequestHandler
 
 -----------------------------------------------------------------------------------------------
 */
-
-import java.awt.*;
-import java.io.*;
-import java.net.*;
-import javax.imageio.*;
-
-/*
-
------------------------------------------------------------------------------------------------
-STOLEN FROM THIS MAN ON GITHUB
-https://github.com/stefano-lupo/Java-Proxy-Server/blob/master/src/RequestHandler.java
-
------------------------------------------------------------------------------------------------
-*/
 import java.awt.*;
 import java.io.*;
 import java.net.*;
@@ -101,18 +87,17 @@ public class RequestHandler implements Runnable {
 
 
 		try{
-
 			// Open a socket to the remote server
-			Socket proxyToServerSocket = new Socket("localhost", 8080);
+			Socket proxyToServerSocket = new Socket("192.168.0.138", 8080);
 			proxyToServerSocket.setSoTimeout(5000);
-
+			/*
 			// Send Connection established to the client
 			String line = "HTTP/1.0 200 Connection established\r\n" +
 					"Proxy-Agent: ProxyServer/1.0\r\n" +
 					"\r\n";
 			proxyToClientBw.write(line);
 			proxyToClientBw.flush();
-
+			*/
 
 
 			// Client and Remote will both start sending data to proxy at this point

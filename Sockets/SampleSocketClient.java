@@ -128,7 +128,7 @@ public class SampleSocketClient {
 			if(port == -1){
 				return;
 			}
-			client.connect("128.235.211.21", port);
+			client.connect("192.168.0.138", port);
 			try {
 				//if start is private, it's valid here since this main is part of the class
 				client.start();

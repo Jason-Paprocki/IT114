@@ -46,9 +46,11 @@ public class RequestHandler implements Runnable
 	 * Creates a ReuqestHandler object capable of servicing HTTP(S) GET requests
 	 * @param clientSocket socket connected to the client
 	 */
-	public RequestHandler(Socket clientSocket){
+	public RequestHandler(Socket clientSocket)
+	{
 		this.clientSocket = clientSocket;
-		try{
+		try
+		{
 			this.clientSocket.setSoTimeout(2000);
 			proxyToClientBr = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			proxyToClientBw = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
@@ -82,7 +84,7 @@ public class RequestHandler implements Runnable
 
 		// Parse out URL
 
-		System.out.println("Reuest Received " + requestString);
+		System.out.println("Request Received " + requestString);
 		// Get the Request type
 		String request = requestString.substring(0,requestString.indexOf(' '));
 
@@ -164,14 +166,14 @@ public class RequestHandler implements Runnable
 				if(image != null) {
 					// Cache the image to disk
 					//ImageIO.write(image, fileExtension.substring(1), fileToCache);
-
+					/*
 					// Send response code to client
 					String line = "HTTP/1.0 200 OK\n" +
 							"Proxy-agent: ProxyServer/1.0\n" +
 							"\r\n";
 					proxyToClientBw.write(line);
 					proxyToClientBw.flush();
-
+					*/
 					// Send them the image data
 					ImageIO.write(image, fileExtension.substring(1), clientSocket.getOutputStream());
 
