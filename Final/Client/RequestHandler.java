@@ -88,7 +88,7 @@ public class RequestHandler implements Runnable {
 
 		try{
 			// Open a socket to the remote server
-			Socket proxyToServerSocket = new Socket("192.168.0.138", 8080);
+			Socket proxyToServerSocket = new Socket("128.235.211.21", 8080);
 			proxyToServerSocket.setSoTimeout(5000);
 			/*
 			// Send Connection established to the client
@@ -204,11 +204,18 @@ public class RequestHandler implements Runnable {
 		@Override
 		public void run(){
 			try {
+
 				// Read byte by byte from client and send directly to server
 				byte[] buffer = new byte[4096];
 				int read;
 				do {
 					read = proxyToClientIS.read(buffer);
+					System.out.println("Beep");
+					//Convert byte[] to String
+					String s = new String(buffer);
+					System.out.println("YA thi is " + s);
+
+
 					if (read > 0) {
 						proxyToServerOS.write(buffer, 0, read);
 						if (proxyToClientIS.available() < 1) {
@@ -218,7 +225,7 @@ public class RequestHandler implements Runnable {
 				} while (read >= 0);
 			}
 			catch (SocketTimeoutException ste) {
-				// TODO: handle exception
+				ste.printStackTrace();
 			}
 			catch (IOException e) {
 				System.out.println("Proxy to client HTTPS read timed out");
