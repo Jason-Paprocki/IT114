@@ -259,7 +259,7 @@ public class RequestHandler implements Runnable
 			// Read (and throw away) the rest of the initial data on the stream
 			//for(int i=0;i<5;i++){
 			//	proxyToClientBr.readLine();
-			}
+			//}
 
 			// Get actual IP associated with this URL through DNS
 			InetAddress address = InetAddress.getByName(url);
