@@ -74,8 +74,8 @@ public class RequestHandler implements Runnable
 		String requestString;
 		try
         {
-			System.out.println(requestString);
 			requestString = proxyToClientBr.readLine();
+			System.out.println(requestString);
 		}
         catch (IOException e)
         {
