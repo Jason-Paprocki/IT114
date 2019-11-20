@@ -114,7 +114,7 @@ public class RequestHandler implements Runnable {
 
 			// Create a new thread to listen to client and transmit to server
 			ClientToServerHttpsTransmit clientToServerHttps =
-					new ClientToServerHttpsTransmit(clientSocket.getInputStream(), proxyToServerSocket.getOutputStream());
+					new ClientToServerHttpsTransmit(urlString);
 
 			httpsClientToServer = new Thread(clientToServerHttps);
 			httpsClientToServer.start();
@@ -188,41 +188,26 @@ public class RequestHandler implements Runnable {
 	 */
 	class ClientToServerHttpsTransmit implements Runnable{
 
-		InputStream proxyToClientIS;
-		OutputStream proxyToServerOS;
+		BufferedWriter proxyToClientBw;
 
 		/**
 		 * Creates Object to Listen to Client and Transmit that data to the server
 		 * @param proxyToClientIS Stream that proxy uses to receive data from client
 		 * @param proxyToServerOS Stream that proxy uses to transmit data to remote server
 		 */
-		public ClientToServerHttpsTransmit(InputStream proxyToClientIS, OutputStream proxyToServerOS) {
-			this.proxyToClientIS = proxyToClientIS;
-			this.proxyToServerOS = proxyToServerOS;
+		public ClientToServerHttpsTransmit(String urlString) {
+			this.urlString = urlString;
 		}
 
 		@Override
 		public void run(){
-			try {
-
-				// Read byte by byte from client and send directly to server
-				byte[] buffer = new byte[4096];
-				int read;
-				do {
-					read = proxyToClientIS.read(buffer);
-					if (read > 0) {
-						proxyToServerOS.write(buffer, 0, read);
-						if (proxyToClientIS.available() < 1) {
-							proxyToServerOS.flush();
-						}
-					}
-				} while (read >= 0);
+			try
+			{
+				proxyToClientBw.write(urlString);
+				proxproxyToClientBw.flush();
 			}
-			catch (SocketTimeoutException ste) {
-				ste.printStackTrace();
-			}
-			catch (IOException e) {
-				System.out.println("Proxy to client HTTPS read timed out");
+			catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 		}
