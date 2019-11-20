@@ -118,6 +118,7 @@ public class RequestHandler implements Runnable {
 				{
 					try
 					{
+						System.out.println("ya its here: " + urlString );
 						out.println(urlString);
 					}
 					catch(Exception e)
