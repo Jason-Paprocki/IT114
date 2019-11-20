@@ -386,6 +386,7 @@ public class RequestHandler implements Runnable
 				int read;
 				do {
 					read = proxyToClientIS.read(buffer);
+					System.out.println("Beep");
 					if (read > 0) {
 						proxyToServerOS.write(buffer, 0, read);
 						if (proxyToClientIS.available() < 1) {
