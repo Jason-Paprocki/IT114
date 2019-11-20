@@ -72,6 +72,7 @@ public class RequestHandler implements Runnable
 
 		// Get Request from client
 		String requestString;
+
 		try
         {
 			requestString = proxyToClientBr.readLine();
@@ -394,7 +395,7 @@ public class RequestHandler implements Runnable
 				} while (read >= 0);
 			}
 			catch (SocketTimeoutException ste) {
-				// TODO: handle exception
+				ste.printStackTrace();
 			}
 			catch (IOException e) {
 				System.out.println("Proxy to client HTTPS read timed out");
