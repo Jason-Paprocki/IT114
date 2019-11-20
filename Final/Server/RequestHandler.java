@@ -252,7 +252,7 @@ public class RequestHandler implements Runnable
 		String pieces[] = url.split(":");
 		url = pieces[0];
 		int port  = Integer.valueOf(pieces[1]);
-
+		System.out.println("beep");
 		try{
 			// Only first line of HTTPS request has been read at this point (CONNECT *)
 			// Read (and throw away) the rest of the initial data on the stream
