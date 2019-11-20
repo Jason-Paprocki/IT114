@@ -75,7 +75,11 @@ public class RequestHandler implements Runnable
 
 		try
         {
-			requestString = proxyToClientBr.readLine();
+			byte[] buffer = new byte[4096];
+			int reading;
+			reading = proxyToServerSocket.getInputStream().read(buffer);
+			String requestString = new String(reading);
+			//requestString = proxyToClientBr.readLine();
 		}
         catch (IOException e)
         {
@@ -386,7 +390,6 @@ public class RequestHandler implements Runnable
 				int read;
 				do {
 					read = proxyToClientIS.read(buffer);
-					System.out.println("Beep");
 					if (read > 0) {
 						proxyToServerOS.write(buffer, 0, read);
 						if (proxyToClientIS.available() < 1) {
