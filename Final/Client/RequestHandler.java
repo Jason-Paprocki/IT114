@@ -88,7 +88,7 @@ public class RequestHandler implements Runnable {
 
 		try{
 			// Open a socket to the remote server
-			Socket proxyToServerSocket = new Socket("128.235.211.21", 8080);
+			Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
 			proxyToServerSocket.setSoTimeout(5000);
 			/*
 			// Send Connection established to the client
