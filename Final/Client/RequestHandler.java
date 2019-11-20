@@ -12,7 +12,6 @@ import java.net.*;
 import javax.imageio.*;
 
 public class RequestHandler implements Runnable {
-
 	/**
 	 * Socket connected to client passed by Proxy server
 	 */
