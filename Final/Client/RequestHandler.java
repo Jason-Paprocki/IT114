@@ -1,24 +1,17 @@
-//testing
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import javax.imageio.ImageIO;
+/*
 
-public class RequestHandler implements Runnable
-{
+-----------------------------------------------------------------------------------------------
+STOLEN FROM THIS MAN ON GITHUB
+https://github.com/stefano-lupo/Java-Proxy-Server/blob/master/src/RequestHandler.java
+
+-----------------------------------------------------------------------------------------------
+*/
+import java.awt.*;
+import java.io.*;
+import java.net.*;
+import javax.imageio.*;
+
+public class RequestHandler implements Runnable {
 
 	/**
 	 * Socket connected to client passed by Proxy server
@@ -47,11 +40,9 @@ public class RequestHandler implements Runnable
 	 * Creates a ReuqestHandler object capable of servicing HTTP(S) GET requests
 	 * @param clientSocket socket connected to the client
 	 */
-	public RequestHandler(Socket clientSocket)
-	{
+	public RequestHandler(Socket clientSocket){
 		this.clientSocket = clientSocket;
-		try
-		{
+		try{
 			this.clientSocket.setSoTimeout(2000);
 			proxyToClientBr = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			proxyToClientBw = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
@@ -72,13 +63,9 @@ public class RequestHandler implements Runnable
 
 		// Get Request from client
 		String requestString;
-
-		try
-        {
+		try{
 			requestString = proxyToClientBr.readLine();
-		}
-        catch (IOException e)
-        {
+		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Error reading request from client");
 			return;
@@ -87,27 +74,30 @@ public class RequestHandler implements Runnable
 		// Parse out URL
 
 		System.out.println("Request Received " + requestString);
-
+		sendPageToClient(requestString);
 	}
 
-	/**
+
+	/*
 	 * Handles HTTPS requests between client and remote server
 	 * @param urlString desired file to be transmitted over https
 	 */
-	private void handleHTTPSRequest(String urlString){
+	private void sendPageToClient(String urlString){
+		// Extract the URL and port of remote
 
 
+		try{
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
 			proxyToServerSocket.setSoTimeout(5000);
-
+			/*
 			// Send Connection established to the client
 			String line = "HTTP/1.0 200 Connection established\r\n" +
 					"Proxy-Agent: ProxyServer/1.0\r\n" +
 					"\r\n";
 			proxyToClientBw.write(line);
 			proxyToClientBw.flush();
-
+			*/
 
 
 			// Client and Remote will both start sending data to proxy at this point
@@ -206,8 +196,7 @@ public class RequestHandler implements Runnable
 		 * @param proxyToClientIS Stream that proxy uses to receive data from client
 		 * @param proxyToServerOS Stream that proxy uses to transmit data to remote server
 		 */
-		public ClientToServerHttpsTransmit(InputStream proxyToClientIS, OutputStream proxyToServerOS)
-        {
+		public ClientToServerHttpsTransmit(InputStream proxyToClientIS, OutputStream proxyToServerOS) {
 			this.proxyToClientIS = proxyToClientIS;
 			this.proxyToServerOS = proxyToServerOS;
 		}
@@ -215,11 +204,19 @@ public class RequestHandler implements Runnable
 		@Override
 		public void run(){
 			try {
+
 				// Read byte by byte from client and send directly to server
 				byte[] buffer = new byte[4096];
 				int read;
 				do {
+					System.out.println(read);
 					read = proxyToClientIS.read(buffer);
+					System.out.println(read);
+					//Convert byte[] to String
+					String s = new String(buffer);
+					System.out.println("YA thi is " + s);
+
+
 					if (read > 0) {
 						proxyToServerOS.write(buffer, 0, read);
 						if (proxyToClientIS.available() < 1) {
@@ -237,4 +234,5 @@ public class RequestHandler implements Runnable
 			}
 		}
 	}
+
 }
