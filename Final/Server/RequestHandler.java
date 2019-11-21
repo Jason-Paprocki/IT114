@@ -253,7 +253,7 @@ public class RequestHandler implements Runnable
 
 			// Get actual IP associated with this URL through DNS
 			InetAddress address = InetAddress.getByName(url);
-
+			System.out.println(address);
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket(address, port);
 			proxyToServerSocket.setSoTimeout(5000);
