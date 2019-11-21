@@ -86,6 +86,7 @@ public class RequestHandler implements Runnable {
 			BufferedReader proxyToServerBR = new BufferedReader(new InputStreamReader(proxyToServerSocket.getInputStream()));
 
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
 			Thread inputThread = new Thread()
 			{
 				@Override
@@ -93,7 +94,7 @@ public class RequestHandler implements Runnable {
 				{
 					try
 					{
-						System.out.println("ya its here: " + urlString );
+						System.out.println("sending to server: " + urlString );
 						out.println(urlString);
 					}
 					catch(Exception e)

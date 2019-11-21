@@ -33,7 +33,7 @@ public class Server implements Runnable
     try
     {
       serverSocket = new ServerSocket(port);
-      serverSocket.accept();
+
       System.out.println("Wating for client to connect on port " + serverSocket.getLocalPort());
       running = true;
     }
@@ -41,11 +41,11 @@ public class Server implements Runnable
     {
       System.out.println("Socket Exception when connecting to client");
       se.printStackTrace();
-		}
-		catch (SocketTimeoutException ste)
+	}
+	catch (SocketTimeoutException ste)
     {
       System.out.println("Timeout occured while connecting to client");
-		}
+	}
     catch (IOException io)
     {
       System.out.println("IO exception when connecting to client");
