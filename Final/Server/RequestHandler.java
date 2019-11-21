@@ -242,7 +242,7 @@ public class RequestHandler implements Runnable
 		String pieces[] = url.split(":");
 		url = pieces[0];
 		int port  = Integer.valueOf(pieces[1]);
-		System.out.println("beep");
+
 
 		try{
 			// Only first line of HTTPS request has been read at this point (CONNECT *)
@@ -257,7 +257,7 @@ public class RequestHandler implements Runnable
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket(address, port);
 			proxyToServerSocket.setSoTimeout(5000);
-
+			System.out.println("beep");
 			// Send Connection established to the client
 			String line = "HTTP/1.0 200 Connection established\r\n" +
 					"Proxy-Agent: ProxyServer/1.0\r\n" +
