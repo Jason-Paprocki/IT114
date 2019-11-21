@@ -253,7 +253,7 @@ public class RequestHandler implements Runnable
 
 			// Get actual IP associated with this URL through DNS
 			InetAddress address = InetAddress.getByName(url);
-			System.out.println("==========="+address);
+
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket(address, port);
 			proxyToServerSocket.setSoTimeout(5000);
@@ -262,6 +262,7 @@ public class RequestHandler implements Runnable
 			String line = "HTTP/1.0 200 Connection established\r\n" +
 					"Proxy-Agent: ProxyServer/1.0\r\n" +
 					"\r\n";
+
 			proxyToClientBw.write(line);
 			proxyToClientBw.flush();
 
@@ -373,8 +374,10 @@ public class RequestHandler implements Runnable
 		@Override
 		public void run()
 		{
+			System.out.println("Beep1");
 			try
 			{
+				System.out.println("Beep2");
 				// Read byte by byte from client and send directly to server
 				byte[] buffer = new byte[4096];
 				int read;
@@ -395,7 +398,7 @@ public class RequestHandler implements Runnable
 			catch (SocketTimeoutException ste)
 			{
 				ste.printStackTrace();
-				System.out.println("beep2");
+				System.out.println("Socket Timeout Exception");
 			}
 			catch (IOException e)
 			{
