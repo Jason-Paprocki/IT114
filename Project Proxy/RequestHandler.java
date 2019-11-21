@@ -87,7 +87,7 @@ public class RequestHandler implements Runnable {
 			// Create Buffered Reader from proxy and remote
 			BufferedReader proxyToServerBR = new BufferedReader(new InputStreamReader(proxyToServerSocket.getInputStream()));
 
-			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+			PrintWriter out = new PrintWriter(proxyToServerSocket.getOutputStream(), true);
 
 			Thread inputThread = new Thread()
 			{
