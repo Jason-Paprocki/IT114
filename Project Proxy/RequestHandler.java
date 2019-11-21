@@ -28,14 +28,6 @@ public class RequestHandler implements Runnable {
 	 */
 	BufferedWriter proxyToClientBw;
 
-
-	/**
-	 * Thread that is used to transmit data read from client to server when using HTTPS
-	 * Reference to this is required so it can be closed once completed.
-	 */
-	private Thread httpsClientToServer;
-
-
 	/**
 	 * Creates a ReuqestHandler object capable of servicing HTTP(S) GET requests
 	 * @param clientSocket socket connected to the client
@@ -71,7 +63,6 @@ public class RequestHandler implements Runnable {
 			return;
 		}
 
-		// Parse out URL
 
 		System.out.println("Request Received " + requestString);
 		sendPageToClient(requestString);
@@ -83,26 +74,10 @@ public class RequestHandler implements Runnable {
 	 * @param urlString desired file to be transmitted over https
 	 */
 	private void sendPageToClient(String urlString){
-		// Extract the URL and port of remote
-
-
 		try{
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
 			proxyToServerSocket.setSoTimeout(5000);
-			/*
-			// Send Connection established to the client
-			String line = "HTTP/1.0 200 Connection established\r\n" +
-					"Proxy-Agent: ProxyServer/1.0\r\n" +
-					"\r\n";
-			proxyToClientBw.write(line);
-			proxyToClientBw.flush();
-			*/
-
-
-			// Client and Remote will both start sending data to proxy at this point
-			// Proxy needs to asynchronously read data from each party and send it to the other party
-
 
 			//Create a Buffered Writer betwen proxy and remote
 			BufferedWriter proxyToServerBW = new BufferedWriter(new OutputStreamWriter(proxyToServerSocket.getOutputStream()));
