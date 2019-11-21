@@ -51,8 +51,8 @@ public class RequestHandler implements Runnable {
 	 * on the request type.
 	 */
 	@Override
-	public void run() {
-
+	public void run()
+	{
 		// Get Request from client
 		String requestString;
 		try{

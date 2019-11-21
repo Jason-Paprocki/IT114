@@ -374,15 +374,14 @@ public class RequestHandler implements Runnable
 		@Override
 		public void run()
 		{
-			System.out.println("Beep1");
 			try
 			{
-				System.out.println("Beep2");
 				// Read byte by byte from client and send directly to server
 				byte[] buffer = new byte[4096];
 				int read;
 				do
 				{
+					System.out.println("Beep1");
 					read = proxyToClientIS.read(buffer);
 					System.out.println(buffer);
 					if (read > 0)
