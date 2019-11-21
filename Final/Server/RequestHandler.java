@@ -212,7 +212,7 @@ public class RequestHandler implements Runnable
 
 				// Ensure all data is sent by this point
 				proxyToClientBw.flush();
-
+				/*
 				// Close Down Resources
 				if(proxyToServerBR != null){
 					proxyToServerBR.close();
@@ -222,6 +222,7 @@ public class RequestHandler implements Runnable
 			if(proxyToClientBw != null){
 				proxyToClientBw.close();
 			}
+			*/
 		}
 
 		catch (Exception e){
@@ -279,7 +280,7 @@ public class RequestHandler implements Runnable
 
 			// Create a new thread to listen to client and transmit to server
 			ClientToServerHttpsTransmit clientToServerHttps =
-					new ClientToServerHttpsTransmit(proxyToServerSocket.getInputStream(), proxyToServerSocket.getOutputStream());
+					new ClientToServerHttpsTransmit(clientSocket.getInputStream(), proxyToServerSocket.getOutputStream());
 
 			httpsClientToServer = new Thread(clientToServerHttps);
 			httpsClientToServer.start();
@@ -306,7 +307,7 @@ public class RequestHandler implements Runnable
 				e.printStackTrace();
 			}
 
-
+			/*
 			// Close Down Resources
 			if(proxyToServerSocket != null){
 				proxyToServerSocket.close();
@@ -323,7 +324,7 @@ public class RequestHandler implements Runnable
 			if(proxyToClientBw != null){
 				proxyToClientBw.close();
 			}
-
+			*/
 
 		} catch (SocketTimeoutException e) {
 			String line = "HTTP/1.0 504 Timeout Occured after 10s\n" +
