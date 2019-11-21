@@ -73,8 +73,10 @@ public class RequestHandler implements Runnable {
 	 * Handles HTTPS requests between client and remote server
 	 * @param urlString desired file to be transmitted over https
 	 */
-	private void sendPageToClient(String urlString){
-		try{
+	private void sendPageToClient(String urlString)
+	{
+		try
+		{
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
 			proxyToServerSocket.setSoTimeout(5000);
@@ -122,14 +124,15 @@ public class RequestHandler implements Runnable {
 					}
 				} while (read >= 0);
 			}
-			catch (SocketTimeoutException e) {
-
+			catch (SocketTimeoutException e)
+			{
+				e.printStackTrace();
 			}
 			catch (IOException e) {
 				e.printStackTrace();
 			}
 
-
+			/*
 			// Close Down Resources
 			if(proxyToServerSocket != null){
 				proxyToServerSocket.close();
@@ -146,20 +149,26 @@ public class RequestHandler implements Runnable {
 			if(proxyToClientBw != null){
 				proxyToClientBw.close();
 			}
+			*/
 
-
-		} catch (SocketTimeoutException e) {
+		}
+		catch (SocketTimeoutException e)
+		{
 			String line = "HTTP/1.0 504 Timeout Occured after 10s\n" +
 					"User-Agent: ProxyServer/1.0\n" +
 					"\r\n";
-			try{
+			try
+			{
 				proxyToClientBw.write(line);
 				proxyToClientBw.flush();
-			} catch (IOException ioe) {
+			}
+			catch (IOException ioe)
+			{
 				ioe.printStackTrace();
 			}
 		}
-		catch (Exception e){
+		catch (Exception e)
+		{
 			System.out.println("Error on HTTPS : " + urlString );
 			e.printStackTrace();
 		}
