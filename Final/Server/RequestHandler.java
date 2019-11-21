@@ -257,7 +257,7 @@ public class RequestHandler implements Runnable
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket(address, port);
 			proxyToServerSocket.setSoTimeout(5000);
-			System.out.println("beep");
+			System.out.println("-------"+address);
 			// Send Connection established to the client
 			String line = "HTTP/1.0 200 Connection established\r\n" +
 					"Proxy-Agent: ProxyServer/1.0\r\n" +
