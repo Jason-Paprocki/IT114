@@ -216,16 +216,17 @@ public class RequestHandler implements Runnable
 				// Close Down Resources
 				if(proxyToServerBR != null){
 					proxyToServerBR.close();
-				}
+				}*/
 			}
-
+			/*
 			if(proxyToClientBw != null){
 				proxyToClientBw.close();
 			}
 			*/
 		}
 
-		catch (Exception e){
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
