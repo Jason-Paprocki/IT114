@@ -380,6 +380,7 @@ public class RequestHandler implements Runnable
 				do
 				{
 					read = proxyToClientIS.read(buffer);
+					System.out.println(buffer);
 					if (read > 0)
 					{
 						proxyToServerOS.write(buffer, 0, read);
