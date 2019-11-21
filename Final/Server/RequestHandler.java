@@ -55,7 +55,8 @@ public class RequestHandler implements Runnable
 	 * on the request type.
 	 */
 	@Override
-	public void run() {
+	public void run()
+	{
 
 		// Get Request from client
 		String requestString;
@@ -67,7 +68,7 @@ public class RequestHandler implements Runnable
         catch (IOException e)
         {
 			e.printStackTrace();
-			System.out.println("Error reading request from client");
+			System.out.println("Beep");
 			return;
 		}
 
