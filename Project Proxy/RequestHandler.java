@@ -79,7 +79,7 @@ public class RequestHandler implements Runnable {
 		{
 			// Open a socket to the remote server
 			Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
-			proxyToServerSocket.setSoTimeout(5000);
+			proxyToServerSocket.setSoTimeout(10000);
 
 			//Create a Buffered Writer betwen proxy and remote
 			BufferedWriter proxyToServerBW = new BufferedWriter(new OutputStreamWriter(proxyToServerSocket.getOutputStream()));
