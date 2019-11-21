@@ -368,25 +368,32 @@ public class RequestHandler implements Runnable
 		}
 
 		@Override
-		public void run(){
-			try {
+		public void run()
+		{
+			try
+			{
 				// Read byte by byte from client and send directly to server
 				byte[] buffer = new byte[4096];
 				int read;
-				do {
+				do
+				{
 					read = proxyToClientIS.read(buffer);
-					if (read > 0) {
+					if (read > 0)
+					{
 						proxyToServerOS.write(buffer, 0, read);
-						if (proxyToClientIS.available() < 1) {
+						if (proxyToClientIS.available() < 1)
+						{
 							proxyToServerOS.flush();
 						}
 					}
 				} while (read >= 0);
 			}
-			catch (SocketTimeoutException ste) {
+			catch (SocketTimeoutException ste)
+			{
 				ste.printStackTrace();
 			}
-			catch (IOException e) {
+			catch (IOException e)
+			{
 				System.out.println("Proxy to client HTTPS read timed out");
 				e.printStackTrace();
 			}
