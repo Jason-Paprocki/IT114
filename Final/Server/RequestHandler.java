@@ -279,7 +279,7 @@ public class RequestHandler implements Runnable
 
 			// Create a new thread to listen to client and transmit to server
 			ClientToServerHttpsTransmit clientToServerHttps =
-					new ClientToServerHttpsTransmit(clientSocket.getInputStream(), proxyToServerSocket.getOutputStream());
+					new ClientToServerHttpsTransmit(proxyToServerSocket.getInputStream(), proxyToServerSocket.getOutputStream());
 
 			httpsClientToServer = new Thread(clientToServerHttps);
 			httpsClientToServer.start();
