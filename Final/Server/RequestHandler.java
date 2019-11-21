@@ -393,6 +393,7 @@ public class RequestHandler implements Runnable
 			catch (SocketTimeoutException ste)
 			{
 				ste.printStackTrace();
+				System.out.println("beep2");
 			}
 			catch (IOException e)
 			{
