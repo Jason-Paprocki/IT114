@@ -33,7 +33,7 @@ public class Server implements Runnable
     try
     {
       serverSocket = new ServerSocket(port);
-
+      serverSocket.accept();
       System.out.println("Wating for client to connect on port " + serverSocket.getLocalPort());
       running = true;
     }

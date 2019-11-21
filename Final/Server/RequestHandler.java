@@ -42,7 +42,6 @@ public class RequestHandler implements Runnable
 			this.clientSocket.setSoTimeout(2000);
 			proxyToClientBr = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			proxyToClientBw = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-			this.clientSocket.accept();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
