@@ -209,7 +209,7 @@ public class RequestHandler implements Runnable {
 				byte[] buffer = new byte[4096];
 				int read;
 				do {
-					System.out.println(read);
+					System.out.println("beep");
 					read = proxyToClientIS.read(buffer);
 					System.out.println(read);
 					//Convert byte[] to String
