@@ -309,7 +309,7 @@ public class RequestHandler implements Runnable
 				e.printStackTrace();
 			}
 
-			/*
+
 			// Close Down Resources
 			if(proxyToServerSocket != null){
 				proxyToServerSocket.close();
@@ -326,7 +326,7 @@ public class RequestHandler implements Runnable
 			if(proxyToClientBw != null){
 				proxyToClientBw.close();
 			}
-			*/
+			
 
 		} catch (SocketTimeoutException e) {
 			String line = "HTTP/1.0 504 Timeout Occured after 10s\n" +
