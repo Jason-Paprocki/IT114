@@ -68,7 +68,7 @@ public class RequestHandler implements Runnable
         catch (IOException e)
         {
 			e.printStackTrace();
-			System.out.println("Beep");
+			System.out.println("IOException reading from client");
 			return;
 		}
 
@@ -294,7 +294,6 @@ public class RequestHandler implements Runnable
 				int read;
 				do {
 					read = proxyToServerSocket.getInputStream().read(buffer);
-					System.out.println("beep");
 					if (read > 0) {
 						clientSocket.getOutputStream().write(buffer, 0, read);
 						if (proxyToServerSocket.getInputStream().available() < 1) {
@@ -381,7 +380,6 @@ public class RequestHandler implements Runnable
 				int read;
 				do
 				{
-					System.out.println("Beep1");
 					read = proxyToClientIS.read(buffer);
 					System.out.println(buffer);
 					if (read > 0)
