@@ -49,11 +49,11 @@ public class UI
 			{
 				String whichServer = cb.getSelectedItem().toString();
 				String ipAddress = addresses.get(whichServer);
-				Client(ipAddress, 8080);
+				Client myServer = new Client(ipAddress, 8080);
+				myServer.listen();
 			}
 
 		});
-
 		frame.pack();
 	}
 }

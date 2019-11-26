@@ -16,15 +16,17 @@ public class Client implements Runnable
 	private ServerSocket serverSocket;
 	private volatile boolean running = true;
 	static ArrayList<Thread> servicingThreads;
+	private String ip;
 
 	public static void main(String[] args)
 	{
-		Client myServer = new Client(8080);
-		myServer.listen();
+		//Client myServer = new Client(8080);
+		//myServer.listen();
 	}
 
 	public Client(String ip, int port)
 	{
+		this.ip = ip;
 		servicingThreads = new ArrayList<>();
 
 		new Thread(this).start();
