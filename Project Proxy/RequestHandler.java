@@ -28,14 +28,17 @@ public class RequestHandler implements Runnable {
 	 */
 	BufferedWriter proxyToClientBw;
 
+	private String myIP;
+
 	private Thread httpsClientToServer;
 
 	/**
 	 * Creates a ReuqestHandler object capable of servicing HTTP(S) GET requests
 	 * @param clientSocket socket connected to the client
 	 */
-	public RequestHandler(Socket clientSocket){
+	public RequestHandler(String myIP, Socket clientSocket){
 		this.clientSocket = clientSocket;
+		this.myIP = myIP;
 		try{
 			this.clientSocket.setSoTimeout(200000);
 			proxyToClientBr = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -80,7 +83,7 @@ public class RequestHandler implements Runnable {
 		try
 		{
 			// Open a socket to the remote server
-			Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
+			Socket proxyToServerSocket = new Socket(myIP, 8080);
 			proxyToServerSocket.setSoTimeout(10000);
 
 			//Create a Buffered Writer betwen proxy and remote

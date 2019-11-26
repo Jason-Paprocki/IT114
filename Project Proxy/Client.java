@@ -23,7 +23,7 @@ public class Client implements Runnable
 		myServer.listen();
 	}
 
-	public Client(int port)
+	public Client(String ip, int port)
 	{
 		servicingThreads = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class Client implements Runnable
 			{
 				Socket socket = serverSocket.accept();
 
-				Thread thread = new Thread(new RequestHandler(socket));
+				Thread thread = new Thread(new RequestHandler(ip, socket));
 
 				servicingThreads.add(thread);
 				thread.start();
