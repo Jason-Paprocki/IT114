@@ -58,7 +58,7 @@ public class UI
 					{
 						String whichServer = cb.getSelectedItem().toString();
 						String ipAddress = addresses.get(whichServer);
-						Client myServer = new Client(ipAddress, 8080);
+						Client myServer = new Client(ipAddress, 443);
 						myServer.listen();
 					}
 				};

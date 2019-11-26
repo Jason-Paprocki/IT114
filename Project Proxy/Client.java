@@ -17,6 +17,7 @@ public class Client implements Runnable
 	private volatile boolean running = true;
 	static ArrayList<Thread> servicingThreads;
 	private String ip;
+	private int port;
 
 	public static void main(String[] args)
 	{
@@ -27,6 +28,7 @@ public class Client implements Runnable
 	public Client(String ip, int port)
 	{
 		this.ip = ip;
+		this.port = port;
 		servicingThreads = new ArrayList<>();
 
 		new Thread(this).start();
@@ -61,7 +63,7 @@ public class Client implements Runnable
 			{
 				Socket socket = serverSocket.accept();
 
-				Thread thread = new Thread(new RequestHandler(ip, socket));
+				Thread thread = new Thread(new RequestHandler(ip, socket, port));
 
 				servicingThreads.add(thread);
 				thread.start();
