@@ -77,19 +77,12 @@ public class RequestHandler implements Runnable {
 	 */
 	private void sendPageToClient(String urlString)
 	{
-		try
+		try (Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
+		BufferedWriter proxyToServerBW = new BufferedWriter(new OutputStreamWriter(proxyToServerSocket.getOutputStream()));
+		BufferedReader proxyToServerBR = new BufferedReader(new InputStreamReader(proxyToServerSocket.getInputStream()));
+		PrintWriter out = new PrintWriter(proxyToServerSocket.getOutputStream(), true);)
 		{
-			// Open a socket to the remote server
-			Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
 			proxyToServerSocket.setSoTimeout(10000);
-
-			//Create a Buffered Writer betwen proxy and remote
-			BufferedWriter proxyToServerBW = new BufferedWriter(new OutputStreamWriter(proxyToServerSocket.getOutputStream()));
-
-			// Create Buffered Reader from proxy and remote
-			BufferedReader proxyToServerBR = new BufferedReader(new InputStreamReader(proxyToServerSocket.getInputStream()));
-
-			PrintWriter out = new PrintWriter(proxyToServerSocket.getOutputStream(), true);
 
 			try
 			{
@@ -100,8 +93,6 @@ public class RequestHandler implements Runnable {
 			{
 				e.printStackTrace();
 			}
-
-
 
 			ClientToServerHttpsTransmit clientToServerHttps =
 					new ClientToServerHttpsTransmit(clientSocket.getInputStream(), proxyToServerSocket.getOutputStream());
@@ -131,30 +122,6 @@ public class RequestHandler implements Runnable {
 				e.printStackTrace();
 			}
 
-			/*if(out != null)
-			{
-				//out.close();
-			}
-			// Close Down Resources
-			if(proxyToServerSocket != null)
-			{
-				proxyToServerSocket.close();
-			}
-
-			if(proxyToServerBR != null)
-			{
-				proxyToServerBR.close();
-			}
-
-			if(proxyToServerBW != null)
-			{
-				proxyToServerBW.close();
-			}
-
-			if(proxyToClientBw != null)
-			{
-				proxyToClientBw.close();
-			}*/
 		}
 		catch (SocketTimeoutException e)
 		{
