@@ -29,7 +29,7 @@ public class UI
 
 		//add servers here
 		HashMap<String, String> addresses  = new HashMap<>();
-		addresses.put("Server 1", "127.0.0.1");
+		addresses.put("Server 1", "128.235.211.21");
 
 		//show choices with a combo box
 		String[] choices = { "Server 1","CHOICE 2", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
