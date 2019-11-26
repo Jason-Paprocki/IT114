@@ -3,6 +3,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class UI
 {
@@ -19,7 +21,7 @@ public class UI
 
 		frame.add(panel);
 
-		JLabel lbl = new JLabel("Select one server and click OK");
+		JLabel lbl = new JLabel("Select one server ");
 		lbl.setVisible(true);
 
 		panel.add(lbl);
@@ -31,9 +33,19 @@ public class UI
 		cb.setVisible(true);
 		panel.add(cb);
 
-		JButton btn = new JButton("OK");
+		JButton btn = new JButton();
+		btn.setText("CONECT");
 		panel.add(btn);
 
+		btn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				server = choice;
+			}
+
+		});
 
 	}
 }
