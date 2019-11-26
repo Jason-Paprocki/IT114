@@ -7,6 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.awt.*;
+import java.io.*;
+import java.net.*;
+import javax.imageio.*;
 
 public class UI
 {
@@ -32,7 +36,7 @@ public class UI
 		addresses.put("Server 1", "128.235.211.21");
 
 		//show choices with a combo box
-		String[] choices = { "Server 1","CHOICE 2", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
+		String[] choices = { "Server 1","Server 2", "Server 3","Server 4","Server 5","Server 6"};
 		JComboBox<String> cb = new JComboBox<String>(choices);
 		cb.setVisible(true);
 		panel.add(cb);
@@ -47,13 +51,21 @@ public class UI
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				String whichServer = cb.getSelectedItem().toString();
-				String ipAddress = addresses.get(whichServer);
-				Client myServer = new Client(ipAddress, 8080);
-				myServer.listen();
+				Thread connectionThread = new Thread()
+				{
+					@Override
+					public void run()
+					{
+						String whichServer = cb.getSelectedItem().toString();
+						String ipAddress = addresses.get(whichServer);
+						Client myServer = new Client(ipAddress, 8080);
+						myServer.listen();
+					}
+				};
+				connectionThread.start();
 			}
-
 		});
+		//packs the frame neatly
 		frame.pack();
 	}
 }
