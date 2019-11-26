@@ -33,8 +33,8 @@ public class UI
 
 		//add servers here
 		HashMap<String, String> addresses  = new HashMap<>();
-		addresses.put("Server 1", "128.235.211.21");
-
+		addresses.put("Server 1", "192.168.0.175");
+		addresses.put("Server 2", "128.235.211.21");
 		//show choices with a combo box
 		String[] choices = { "Server 1","Server 2", "Server 3","Server 4","Server 5","Server 6"};
 		JComboBox<String> cb = new JComboBox<String>(choices);
@@ -58,7 +58,7 @@ public class UI
 					{
 						String whichServer = cb.getSelectedItem().toString();
 						String ipAddress = addresses.get(whichServer);
-						Client myServer = new Client(ipAddress, 443);
+						Client myServer = new Client(ipAddress, 8080);
 						myServer.listen();
 					}
 				};
