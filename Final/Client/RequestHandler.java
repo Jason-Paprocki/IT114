@@ -131,9 +131,9 @@ public class RequestHandler implements Runnable {
 				e.printStackTrace();
 			}
 
-			if(out != null)
+			/*if(out != null)
 			{
-				out.close();
+				//out.close();
 			}
 			// Close Down Resources
 			if(proxyToServerSocket != null)
@@ -154,7 +154,7 @@ public class RequestHandler implements Runnable {
 			if(proxyToClientBw != null)
 			{
 				proxyToClientBw.close();
-			}
+			}*/
 		}
 		catch (SocketTimeoutException e)
 		{
