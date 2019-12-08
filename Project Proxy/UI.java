@@ -60,7 +60,7 @@ public class UI
 		discbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		box.add(discbtn);
 		
-		//onclick action for the button
+		//onclick action for the connect button
 		btn.addActionListener(new ActionListener()
 		{
 			@Override
@@ -79,6 +79,28 @@ public class UI
 					}
 				};
 				connectionThread.start();
+			}
+		});
+
+		//onclick action for the disconnect button
+		discbtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				Thread disconnectionThread = new Thread()
+				{
+					@Override
+					public void run()
+					{
+						isRunning.setText("DISCONNECTED to Proxy");
+						Client myServer = new Client();
+						myServer.disconnect();
+						
+
+					}
+				};
+				disconnectionThread.start();
 			}
 		});
 		

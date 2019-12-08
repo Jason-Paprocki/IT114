@@ -14,7 +14,7 @@ public class Client implements Runnable
 {
 
 	private ServerSocket serverSocket;
-	private volatile boolean running = true;
+	public volatile boolean running = true;
 	static ArrayList<Thread> servicingThreads;
 	private String ip;
 	private int port;
@@ -25,6 +25,10 @@ public class Client implements Runnable
 		//myServer.listen();
 	}
 
+	public Client()
+	{
+		
+	}
 	public Client(String ip, int port)
 	{
 		this.ip = ip;
@@ -77,6 +81,12 @@ public class Client implements Runnable
 				io.printStackTrace();
 			}
 		}
+	}
+
+	public void disconnect()
+	{
+		running = false;
+		servicingThreads.clear();
 	}
 
 	@Override
