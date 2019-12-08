@@ -28,14 +28,19 @@ public class RequestHandler implements Runnable {
 	 */
 	BufferedWriter proxyToClientBw;
 
+	private String myIP;
+	private int port;
+
 	private Thread httpsClientToServer;
 
 	/**
 	 * Creates a ReuqestHandler object capable of servicing HTTP(S) GET requests
 	 * @param clientSocket socket connected to the client
 	 */
-	public RequestHandler(Socket clientSocket){
+	public RequestHandler(String myIP, Socket clientSocket, int port){
 		this.clientSocket = clientSocket;
+		this.myIP = myIP;
+		this.port = port;
 		try{
 			this.clientSocket.setSoTimeout(200000);
 			proxyToClientBr = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -77,12 +82,19 @@ public class RequestHandler implements Runnable {
 	 */
 	private void sendPageToClient(String urlString)
 	{
-		try (Socket proxyToServerSocket = new Socket("192.168.0.175", 8080);
-		BufferedWriter proxyToServerBW = new BufferedWriter(new OutputStreamWriter(proxyToServerSocket.getOutputStream()));
-		BufferedReader proxyToServerBR = new BufferedReader(new InputStreamReader(proxyToServerSocket.getInputStream()));
-		PrintWriter out = new PrintWriter(proxyToServerSocket.getOutputStream(), true);)
+		try
 		{
+			// Open a socket to the remote server
+			Socket proxyToServerSocket = new Socket(myIP, port);
 			proxyToServerSocket.setSoTimeout(10000);
+
+			//Create a Buffered Writer betwen proxy and remote
+			BufferedWriter proxyToServerBW = new BufferedWriter(new OutputStreamWriter(proxyToServerSocket.getOutputStream()));
+
+			// Create Buffered Reader from proxy and remote
+			BufferedReader proxyToServerBR = new BufferedReader(new InputStreamReader(proxyToServerSocket.getInputStream()));
+
+			PrintWriter out = new PrintWriter(proxyToServerSocket.getOutputStream(), true);
 
 			try
 			{
@@ -93,6 +105,8 @@ public class RequestHandler implements Runnable {
 			{
 				e.printStackTrace();
 			}
+
+
 
 			ClientToServerHttpsTransmit clientToServerHttps =
 					new ClientToServerHttpsTransmit(clientSocket.getInputStream(), proxyToServerSocket.getOutputStream());
@@ -122,6 +136,30 @@ public class RequestHandler implements Runnable {
 				e.printStackTrace();
 			}
 
+			if(out != null)
+			{
+				out.close();
+			}
+			// Close Down Resources
+			if(proxyToServerSocket != null)
+			{
+				proxyToServerSocket.close();
+			}
+
+			if(proxyToServerBR != null)
+			{
+				proxyToServerBR.close();
+			}
+
+			if(proxyToServerBW != null)
+			{
+				proxyToServerBW.close();
+			}
+
+			if(proxyToClientBw != null)
+			{
+				proxyToClientBw.close();
+			}
 		}
 		catch (SocketTimeoutException e)
 		{

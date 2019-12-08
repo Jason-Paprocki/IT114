@@ -83,12 +83,6 @@ public class Client implements Runnable
 		}
 	}
 
-	public void disconnect()
-	{
-		running = false;
-		servicingThreads.clear();
-	}
-
 	@Override
 	public void run()
 	{
