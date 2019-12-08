@@ -11,6 +11,7 @@ import javax.imageio.*;
 public class UI
 {
 
+
 	public static void main(String[] args)
 	{
 		//crete the Java frame and panel
@@ -42,14 +43,24 @@ public class UI
 		cb.setAlignmentX(Component.CENTER_ALIGNMENT);
 		box.add(cb);
 
-		//show button for selecting
+		//show button for conencting
 		JButton btn = new JButton();
 		btn.setText("CONNECT");
 		btn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		box.add(btn);
 
+		//text to show user if they are connected
+		JLabel isRunning = new JLabel("DISCONNECTED from Proxy");
+		isRunning.setAlignmentX(Component.CENTER_ALIGNMENT);
+		box.add(isRunning);
 
-		//onclick action
+		//show button for disconnecting
+		JButton discbtn = new JButton();
+		discbtn.setText("DISCONNECT");
+		discbtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		box.add(discbtn);
+		
+		//onclick action for the button
 		btn.addActionListener(new ActionListener()
 		{
 			@Override
@@ -60,6 +71,7 @@ public class UI
 					@Override
 					public void run()
 					{
+						isRunning.setText("CONNECTED to Proxy");
 						String whichServer = cb.getSelectedItem().toString();
 						String ipAddress = addresses.get(whichServer);
 						Client myServer = new Client(ipAddress, 8080);
@@ -70,24 +82,35 @@ public class UI
 			}
 		});
 		
-		//check status
-		String server;
-		for(int i = 0; i < addresses.size(); i++)
+
+		//new thread to check connections to improve startup time
+		Thread serverOnline = new Thread()
 		{
-			server = addresses.get("Server " + (i+1)).toString();
-			JLabel onlineServer = new JLabel(server + " is " + hostAvailabilityCheck(server));
-			onlineServer.setAlignmentX(Component.CENTER_ALIGNMENT);
-			box.add(onlineServer);
-		}
-		
+			public void run()
+			{
+				//check status
+				String server;
+				for(int i = 0; i < addresses.size(); i++)
+				{
+					server = addresses.get("Server " + (i+1)).toString();
+					JLabel onlineServer = new JLabel(server + " is " + hostAvailabilityCheck(server));
+					onlineServer.setAlignmentX(Component.CENTER_ALIGNMENT);
+					box.add(onlineServer);
+					frame.pack();
+					frame.setSize(500, 800);
+				}
+			}
+			
+		};
+		serverOnline.start();
 		
 
 		//packs the frame neatly and resizes it
 		frame.pack();
 		frame.setSize(500, 800);
-		frame.setLocation(430, 100);
 	}
 
+	//this will check the availablility of the server by atempting to create socket connection 
 	public static String hostAvailabilityCheck(String inServer)
     {
 		try 
@@ -98,7 +121,6 @@ public class UI
 		}
 		catch (IOException ex) 
 		{
-			ex.printStackTrace();
 			return "DOWN";
 		}
 		
