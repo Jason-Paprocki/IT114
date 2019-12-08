@@ -90,10 +90,12 @@ public class UI
 
 	public static String hostAvailabilityCheck(String inServer)
     {
-		try (Socket s = new Socket("128.235.231.21", 8080))
+		try 
 		{
+			Socket socket = new Socket();
+			socket.connect(new InetSocketAddress(inServer, 8080), 2000);
 			return "UP";
-		} 
+		}
 		catch (IOException ex) 
 		{
 			ex.printStackTrace();
